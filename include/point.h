@@ -2,27 +2,41 @@
 
 #include <iostream>
 #include <cmath>
-#include <type_traits> 
+#include <type_traits>
 
-// Проверяем, является ли тип скалярным (арифметическим)
+// Концепт для проверки, является ли тип скалярным (арифметическим)
 template <class T>
 concept is_scalar = std::is_arithmetic_v<T>;
 
-// Используем концепт для ограничения шаблонного параметра T
 template <is_scalar T>
 class Point {
-    template <is_scalar F>
-    friend std::istream& operator>>(std::istream& is, Point<F>& p);
-    template <is_scalar F>
-    friend std::ostream& operator<<(std::ostream& os, const Point<F>& p);
-
 public:
     T x, y;
 
-    Point();
-    Point(T x, T y);
+    Point() : x(0), y(0) {}
+    Point(T x, T y) : x(x), y(y) {}
 
-    bool operator==(const Point<T>& other) const;
-    Point<T>& operator=(const Point<T>& other);
+    bool operator==(const Point<T>& other) const {
+        return (this->x == other.x && this->y == other.y);
+    }
+
+    Point<T>& operator=(const Point<T>& other) {
+        if (this != &other) {
+            this->x = other.x;
+            this->y = other.y;
+        }
+        return *this;
+    }
 };
 
+template <is_scalar T>
+std::istream& operator>>(std::istream& is, Point<T>& p) {
+    is >> p.x >> p.y;
+    return is;
+}
+
+template <is_scalar T>
+std::ostream& operator<<(std::ostream& os, const Point<T>& p) {
+    os << "(" << p.x << ", " << p.y << ")";
+    return os;
+}

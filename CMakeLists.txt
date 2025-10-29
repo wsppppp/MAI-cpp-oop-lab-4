@@ -5,15 +5,15 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# ==== Библиотека с фигурами (только заголовочные файлы) ====
+# Библиотека фигур (только заголовочные файлы)
 add_library(figures INTERFACE)
 target_include_directories(figures INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# ==== Основное приложение ====
+# Основное приложение
 add_executable(app src/main.cpp)
 target_link_libraries(app PRIVATE figures)
 
-# ==== Подключение GoogleTest для тестирования ====
+# Подключение GoogleTest для тестирования
 enable_testing()
 include(FetchContent)
 FetchContent_Declare(
@@ -22,12 +22,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-# ==== Сборка тестов ====
-# Создаем исполняемый файл для тестов
+# Сборка тестов
 add_executable(run_tests tests/test_figures.cpp)
-
-# Линкуем тесты с GoogleTest и нашей библиотекой фигур
 target_link_libraries(run_tests PRIVATE gtest_main figures)
-
-# Добавляем команду для запуска тестов через 'ctest'
 add_test(NAME unit_tests COMMAND run_tests)
