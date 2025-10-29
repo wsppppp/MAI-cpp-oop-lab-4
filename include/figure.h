@@ -18,7 +18,6 @@ public:
         return (operator double()) == (double)other;
     }
 
-    // Геттеры для безопасного доступа
     size_t getVertexCount() const { return n; }
     const std::unique_ptr<Point<T>[]>& getPoints() const { return p; }
     std::unique_ptr<Point<T>[]>& getPoints() { return p; }

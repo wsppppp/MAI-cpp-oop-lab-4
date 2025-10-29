@@ -4,7 +4,6 @@
 #include <cmath>
 #include <type_traits>
 
-// Концепт для проверки, является ли тип скалярным (арифметическим)
 template <class T>
 concept is_scalar = std::is_arithmetic_v<T>;
 
