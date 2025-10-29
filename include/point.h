@@ -2,7 +2,11 @@
 
 #include <iostream>
 #include <cmath>
-#include "concepts.h" // Подключаем концепт
+#include <type_traits> 
+
+// Проверяем, является ли тип скалярным (арифметическим)
+template <class T>
+concept is_scalar = std::is_arithmetic_v<T>;
 
 // Используем концепт для ограничения шаблонного параметра T
 template <is_scalar T>
